@@ -4,6 +4,9 @@
 import RPi.GPIO as GPIO
 import time
 
+import pyaudio
+import wave
+
 # GPIO Mode (Board / BCM)
 GPIO.setmode(GPIO.BCM)
 
@@ -14,6 +17,13 @@ GPIO_ECHO = 21
 # GPIO setup
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
+
+# Define stream chunk
+chunk = 1024
+
+# setup for pyaudio file
+f = wave.open(r"./voice/duameter.wav", "rb")
+p = pyaudio.PyAudio()
 
 
 def distance():
@@ -40,13 +50,34 @@ def distance():
 
   return distance
 
+
+
+
 if __name__=='__main__':
   try:
-    while True:
-      dist = distance()
-      print("Jarak Terukur = %.1f cm" % dist)
-      time.sleep(1)
+    stream = p.open(format=p.get_format_from_width(f.getsampwidth()),
+                channels=f.getnchannels(),
+                rate=f.getframerate(),
+                output=True)
+
+    data = f.readframes(chunk)
+    
+    while data:
+      stream.write(data)
+      data = f.readframes(chunk)
+
+    # while True:
+    #   dist = distance()
+    #   print("Jarak Terukur = %.1f cm" % dist)
+    #   time.sleep(1)
+
+      # control to voice
+
   
   except KeyboardInterrupt:
-    print("Pengukuran dihentikan")
-    GPIO.cleanup()
+    # print("Pengukuran dihentikan")
+    # GPIO.cleanup()
+      stream.stop_stream()
+      stream.close()
+
+      p.terminate()
