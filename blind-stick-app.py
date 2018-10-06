@@ -66,10 +66,10 @@ if __name__=='__main__':
       stream.write(data)
       data = f.readframes(chunk)
 
-    # while True:
-    #   dist = distance()
-    #   print("Jarak Terukur = %.1f cm" % dist)
-    #   time.sleep(1)
+    while True:
+      dist = distance()
+      print("Jarak Terukur = %.1f cm" % dist)
+      time.sleep(1)
 
       # control to voice
 
