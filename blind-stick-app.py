@@ -22,7 +22,9 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 chunk = 1024
 
 # setup for pyaudio file
-f = wave.open(r"./voice/duameter.wav", "rb")
+setengahMeter = wave.open(r"./voice/setengahmeter.wav", "rb")
+satuMeter = wave.open(r"./voice/satumeter.wav", "rb")
+duaMeter = wave.open(r"./voice/duameter.wav", "rb")
 p = pyaudio.PyAudio()
 
 
@@ -55,18 +57,19 @@ def distance():
 
 if __name__=='__main__':
   try:
-    stream = p.open(format=p.get_format_from_width(f.getsampwidth()),
-                channels=f.getnchannels(),
-                rate=f.getframerate(),
+    stream = p.open(format=p.get_format_from_width(setengahMeter.getsampwidth()),
+                channels=setengahMeter.getnchannels(),
+                rate=setengahMeter.getframerate(),
                 output=True)
 
-    data = f.readframes(chunk)
+    data = setengahMeter.readframes(chunk)
 
-    while data:
-      stream.write(data)
-      data = f.readframes(chunk)
+    # while data:
 
     while True:
+      stream.write(data)
+      data = setengahMeter.readframes(chunk)
+
       dist = distance()
       print("Jarak Terukur = %.1f cm" % dist)
       time.sleep(1)
