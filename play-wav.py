@@ -8,7 +8,7 @@ import wave
 chunk = 1024
 
 # open a wav format music
-f = wave.open(r"/voice/duameter.wav", "rb")
+f = wave.open(r"./voice/duameter.wav", "rb")
 # instantiate PyAudio
 p = pyaudio.PyAudio()
 # open stream
