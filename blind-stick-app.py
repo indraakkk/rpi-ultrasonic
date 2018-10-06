@@ -61,7 +61,7 @@ if __name__=='__main__':
                 output=True)
 
     data = f.readframes(chunk)
-    
+
     while data:
       stream.write(data)
       data = f.readframes(chunk)
@@ -81,3 +81,4 @@ if __name__=='__main__':
       stream.close()
 
       p.terminate()
+      print("voice stopped")
