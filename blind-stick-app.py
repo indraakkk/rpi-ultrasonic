@@ -80,12 +80,17 @@ if __name__=='__main__':
     # while data:
 
     while True:
-      streamHalf.write(data)
-      dataHalf = halfMeter.readframes(chunk)
+      # streamHalf.write(dataHalf)
+      # dataHalf = halfMeter.readframes(chunk)
 
       dist = distance()
       print("Jarak Terukur = %.1f cm" % dist)
       # time.sleep(1)
+      if dist >= 55:
+        print("hati-hati di depan setengah meter")
+      else:
+        print("aman")
+        break
 
       # control to voice
 
@@ -93,8 +98,14 @@ if __name__=='__main__':
   except KeyboardInterrupt:
     # print("Pengukuran dihentikan")
     # GPIO.cleanup()
-      stream.stop_stream()
-      stream.close()
+      streamHalf.stop_stream()
+      streamHalf.close()
+
+      # streamOne.stop_stream()
+      # streamOne.close()
+
+      # streamTwo.stop_stream()
+      # streamTwo.close()
 
       p.terminate()
       print("voice stopped")
