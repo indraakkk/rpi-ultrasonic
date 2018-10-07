@@ -27,6 +27,26 @@ oneMeter = wave.open(r"./voice/satumeter.wav", "rb")
 twoMeter = wave.open(r"./voice/duameter.wav", "rb")
 p = pyaudio.PyAudio()
 
+streamHalf = p.open(format=p.get_format_from_width(halfMeter.getsampwidth()),
+            channels=halfMeter.getnchannels(),
+            rate=halfMeter.getframerate(),
+            output=True)
+
+streamOne = p.open(format=p.get_format_from_width(oneMeter.getsampwidth()),
+            channels=oneMeter.getnchannels(),
+            rate=oneMeter.getframerate(),
+            output=True)
+
+streamTwo = p.open(format=p.get_format_from_width(twoMeter.getsampwidth()),
+        channels=twoMeter.getnchannels(),
+        rate=twoMeter.getframerate(),
+        output=True)
+
+
+dataHalf = halfMeter.readframes(chunk)
+dataOne = oneMeter.readframes(chunk)
+dataTwo = twoMeter.readframes(chunk)
+
 
 def distance():
   # set Trigger to HIGH
@@ -57,31 +77,8 @@ def distance():
 
 if __name__=='__main__':
   try:
-    streamHalf = p.open(format=p.get_format_from_width(halfMeter.getsampwidth()),
-                channels=halfMeter.getnchannels(),
-                rate=halfMeter.getframerate(),
-                output=True)
-
-    streamOne = p.open(format=p.get_format_from_width(oneMeter.getsampwidth()),
-                channels=oneMeter.getnchannels(),
-                rate=oneMeter.getframerate(),
-                output=True)
-    
-    streamTwo = p.open(format=p.get_format_from_width(twoMeter.getsampwidth()),
-            channels=twoMeter.getnchannels(),
-            rate=twoMeter.getframerate(),
-            output=True)
-
-
-    dataHalf = halfMeter.readframes(chunk)
-    dataOne = oneMeter.readframes(chunk)
-    dataTwo = twoMeter.readframes(chunk)
-
-    # while data:
-
     while True:
-
-
+      
       dist = distance()
       print("Jarak Terukur = %.1f cm" % dist)
       # time.sleep(1)
@@ -113,12 +110,7 @@ if __name__=='__main__':
           # print("hati-hati didepan dua meter")
       else:
         print("aman")
-      
 
-
-      
-
-  
   except KeyboardInterrupt:
     print("Monitoring stopped by user")
     GPIO.cleanup()
