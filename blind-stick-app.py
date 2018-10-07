@@ -86,7 +86,7 @@ if __name__=='__main__':
       print("Jarak Terukur = %.1f cm" % dist)
       # time.sleep(1)
       if dist > 0:
-        if dist < 5:
+        if dist > 3 and dist <= 5:
           streamHalf.write(dataHalf)
           dataHalf = halfMeter.readframes(chunk)
           time.sleep(3)
@@ -94,7 +94,7 @@ if __name__=='__main__':
           # streamHalf.close()
           # p.terminate()
           # print("hati-hati didepan setengah meter")
-        elif dist < 10:
+        elif dist > 6 and dist <= 10:
           streamOne.write(dataOne)
           dataOne = oneMeter.readframes(chunk)
           time.sleep(3)
@@ -103,7 +103,7 @@ if __name__=='__main__':
           # p.terminate()
 
           # print("hati-hati didepan satu meter")
-        elif dist < 20:
+        elif dist > 11 and dist <= 20:
           streamTwo.write(dataTwo)
           dataTwo = twoMeter.readframes(chunk)
           time.sleep(3)
@@ -114,11 +114,11 @@ if __name__=='__main__':
       else:
         print("aman")
       
-      streamTwo.stop_stream()
-      streamTwo.close()
+      streamHalf.stop_stream()
+      streamHalf.close()
 
-      streamTwo.stop_stream()
-      streamTwo.close()
+      streamOne.stop_stream()
+      streamOne.close()
 
       streamTwo.stop_stream()
       streamTwo.close()
