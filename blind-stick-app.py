@@ -90,31 +90,44 @@ if __name__=='__main__':
           streamHalf.write(dataHalf)
           dataHalf = halfMeter.readframes(chunk)
           time.sleep(3)
-          streamHalf.stop_stream()
-          streamHalf.close()
-          p.terminate()
+          # streamHalf.stop_stream()
+          # streamHalf.close()
+          # p.terminate()
           # print("hati-hati didepan setengah meter")
         elif dist < 10:
           streamOne.write(dataOne)
           dataOne = oneMeter.readframes(chunk)
           time.sleep(3)
-          streamOne.stop_stream()
-          streamOne.close()
-          p.terminate()
+          # streamOne.stop_stream()
+          # streamOne.close()
+          # p.terminate()
 
           # print("hati-hati didepan satu meter")
         elif dist < 20:
           streamTwo.write(dataTwo)
           dataTwo = twoMeter.readframes(chunk)
           time.sleep(3)
-          streamTwo.stop_stream()
-          streamTwo.close()
-          p.terminate()          
+          # streamTwo.stop_stream()
+          # streamTwo.close()
+          # p.terminate()          
           # print("hati-hati didepan dua meter")
       else:
         print("aman")
+      
+      streamTwo.stop_stream()
+      streamTwo.close()
+
+      streamTwo.stop_stream()
+      streamTwo.close()
+
+      streamTwo.stop_stream()
+      streamTwo.close()
+
+      
 
   
   except KeyboardInterrupt:
     print("Monitoring stopped by user")
     GPIO.cleanup()
+
+    p.terminate()   
