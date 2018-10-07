@@ -62,12 +62,12 @@ if __name__=='__main__':
                 rate=halfMeter.getframerate(),
                 output=True)
 
-    streamHalf = p.open(format=p.get_format_from_width(oneMeter.getsampwidth()),
+    streamOne = p.open(format=p.get_format_from_width(oneMeter.getsampwidth()),
                 channels=oneMeter.getnchannels(),
                 rate=oneMeter.getframerate(),
                 output=True)
     
-    streamHalf = p.open(format=p.get_format_from_width(twoMeter.getsampwidth()),
+    streamTwo = p.open(format=p.get_format_from_width(twoMeter.getsampwidth()),
             channels=twoMeter.getnchannels(),
             rate=twoMeter.getframerate(),
             output=True)
@@ -80,36 +80,41 @@ if __name__=='__main__':
     # while data:
 
     while True:
-      # streamHalf.write(dataHalf)
-      # dataHalf = halfMeter.readframes(chunk)
+
 
       dist = distance()
       print("Jarak Terukur = %.1f cm" % dist)
       # time.sleep(1)
       if dist > 0:
         if dist < 5:
-          print("hati-hati didepan setengah meter")
+          streamHalf.write(dataHalf)
+          dataHalf = halfMeter.readframes(chunk)
+          # print("hati-hati didepan setengah meter")
         elif dist < 10:
-          print("hati-hati didepan satu meter")
+          streamOne.write(dataOne)
+          dataOne = halfMeter.readframes(chunk)
+          # print("hati-hati didepan satu meter")
         elif dist < 20:
-          print("hati-hati didepan dua meter")
+          streamTwo.write(dataTwo)
+          dataTwo = halfMeter.readframes(chunk)
+          # print("hati-hati didepan dua meter")
       else:
         print("aman")
+
 
       # control to voice
 
   
   except KeyboardInterrupt:
-    # print("Pengukuran dihentikan")
-    # GPIO.cleanup()
-      streamHalf.stop_stream()
-      streamHalf.close()
+    streamHalf.stop_stream()
+    streamHalf.close()
 
-      # streamOne.stop_stream()
-      # streamOne.close()
+    streamOne.stop_stream()
+    streamOne.close()
 
-      # streamTwo.stop_stream()
-      # streamTwo.close()
+    streamTwo.stop_stream()
+    streamTwo.close()
 
-      p.terminate()
-      print("voice stopped")
+    p.terminate()
+    print("Monitoring stopped by user")
+    GPIO.cleanup()
