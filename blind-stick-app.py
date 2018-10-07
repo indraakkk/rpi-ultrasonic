@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
 # libraries
+import os
 import RPi.GPIO as GPIO
 import time
 
-import pyaudio
-import wave
+# import pyaudio
+# import wave
 
 # GPIO Mode (Board / BCM)
 GPIO.setmode(GPIO.BCM)
@@ -22,30 +23,30 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 chunk = 1024
 
 # setup for pyaudio file
-halfMeter = wave.open(r"./voice/setengahmeter.wav", "rb")
-oneMeter = wave.open(r"./voice/satumeter.wav", "rb")
-twoMeter = wave.open(r"./voice/duameter.wav", "rb")
-p = pyaudio.PyAudio()
+# halfMeter = wave.open(r"./voice/setengahmeter.wav", "rb")
+# oneMeter = wave.open(r"./voice/satumeter.wav", "rb")
+# twoMeter = wave.open(r"./voice/duameter.wav", "rb")
+# p = pyaudio.PyAudio()
 
-streamHalf = p.open(format=p.get_format_from_width(halfMeter.getsampwidth()),
-            channels=halfMeter.getnchannels(),
-            rate=halfMeter.getframerate(),
-            output=True)
+# streamHalf = p.open(format=p.get_format_from_width(halfMeter.getsampwidth()),
+#             channels=halfMeter.getnchannels(),
+#             rate=halfMeter.getframerate(),
+#             output=True)
 
-streamOne = p.open(format=p.get_format_from_width(oneMeter.getsampwidth()),
-            channels=oneMeter.getnchannels(),
-            rate=oneMeter.getframerate(),
-            output=True)
+# streamOne = p.open(format=p.get_format_from_width(oneMeter.getsampwidth()),
+#             channels=oneMeter.getnchannels(),
+#             rate=oneMeter.getframerate(),
+#             output=True)
 
-streamTwo = p.open(format=p.get_format_from_width(twoMeter.getsampwidth()),
-        channels=twoMeter.getnchannels(),
-        rate=twoMeter.getframerate(),
-        output=True)
+# streamTwo = p.open(format=p.get_format_from_width(twoMeter.getsampwidth()),
+#         channels=twoMeter.getnchannels(),
+#         rate=twoMeter.getframerate(),
+#         output=True)
 
 
-dataHalf = halfMeter.readframes(chunk)
-dataOne = oneMeter.readframes(chunk)
-dataTwo = twoMeter.readframes(chunk)
+# dataHalf = halfMeter.readframes(chunk)
+# dataOne = oneMeter.readframes(chunk)
+# dataTwo = twoMeter.readframes(chunk)
 
 
 def distance():
@@ -73,55 +74,54 @@ def distance():
   return distance
 
 
-
-
 if __name__=='__main__':
   try:
     while True:
-      
+
       dist = distance()
       print("Jarak Terukur = %.1f cm" % dist)
       # time.sleep(1)
-      if dist > 0:
-        if dist > 3 and dist <= 5:
-          streamHalf.write(dataHalf)
-          dataHalf = halfMeter.readframes(chunk)
-          # time.sleep(3)
-          # streamHalf.stop_stream()
-          # streamHalf.close()
-          # p.terminate()
-          # print("hati-hati didepan setengah meter")
-        elif dist > 6 and dist <= 10:
-          streamOne.write(dataOne)
-          dataOne = oneMeter.readframes(chunk)
-          # time.sleep(3)
-          # streamOne.stop_stream()
-          # streamOne.close()
-          # p.terminate()
+      if dist > 3 and dist <= 5:
+        os.system("aplay ./voice/setengahmeter.wav &")
 
-          # print("hati-hati didepan satu meter")
-        elif dist > 11 and dist <= 20:
-          streamTwo.write(dataTwo)
-          dataTwo = twoMeter.readframes(chunk)
-          # time.sleep(3)
-          # streamTwo.stop_stream()
-          # streamTwo.close()
-          # p.terminate()          
-          # print("hati-hati didepan dua meter")
-      else:
-        print("aman")
+      if dist > 6 and dist <= 10:
+        os.system("aplay ./voice/satumeter.wav &")
+
+      if dist > 11 and dist <= 20:
+        os.system("aplay ./voice/duameter.wav &")
+      
+
+
+
+    #   if dist > 0:
+    #     if dist > 3 and dist <= 5:
+    #       streamHalf.write(dataHalf)
+    #       dataHalf = halfMeter.readframes(chunk)
+    #       # time.sleep(3)
+    #       # streamHalf.stop_stream()
+    #       # streamHalf.close()
+    #       # p.terminate()
+    #       print("hati-hati didepan setengah meter")
+    #     elif dist > 6 and dist <= 10:
+    #       streamOne.write(dataOne)
+    #       dataOne = oneMeter.readframes(chunk)
+    #       # time.sleep(3)
+    #       # streamOne.stop_stream()
+    #       # streamOne.close()
+    #       # p.terminate()
+
+    #       # print("hati-hati didepan satu meter")
+    #     elif dist > 11 and dist <= 20:
+    #       streamTwo.write(dataTwo)
+    #       dataTwo = twoMeter.readframes(chunk)
+    #       # time.sleep(3)
+    #       # streamTwo.stop_stream()
+    #       # streamTwo.close()
+    #       # p.terminate()          
+    #       # print("hati-hati didepan dua meter")
+    # else:
+    #   print("aman")
 
   except KeyboardInterrupt:
     print("Monitoring stopped by user")
     GPIO.cleanup()
-
-    streamHalf.stop_stream()
-    streamHalf.close()
-
-    streamOne.stop_stream()
-    streamOne.close()
-
-    streamTwo.stop_stream()
-    streamTwo.close()
-
-    p.terminate()   
