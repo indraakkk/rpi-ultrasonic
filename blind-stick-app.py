@@ -22,9 +22,9 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 chunk = 1024
 
 # setup for pyaudio file
-setengahMeter = wave.open(r"./voice/setengahmeter.wav", "rb")
-satuMeter = wave.open(r"./voice/satumeter.wav", "rb")
-duaMeter = wave.open(r"./voice/duameter.wav", "rb")
+halfMeter = wave.open(r"./voice/setengahmeter.wav", "rb")
+oneMeter = wave.open(r"./voice/satumeter.wav", "rb")
+twoMeter = wave.open(r"./voice/duameter.wav", "rb")
 p = pyaudio.PyAudio()
 
 
@@ -57,22 +57,35 @@ def distance():
 
 if __name__=='__main__':
   try:
-    stream = p.open(format=p.get_format_from_width(setengahMeter.getsampwidth()),
-                channels=setengahMeter.getnchannels(),
-                rate=setengahMeter.getframerate(),
+    streamHalf = p.open(format=p.get_format_from_width(halfMeter.getsampwidth()),
+                channels=halfMeter.getnchannels(),
+                rate=halfMeter.getframerate(),
                 output=True)
 
-    data = setengahMeter.readframes(chunk)
+    streamHalf = p.open(format=p.get_format_from_width(oneMeter.getsampwidth()),
+                channels=oneMeter.getnchannels(),
+                rate=oneMeter.getframerate(),
+                output=True)
+    
+    streamHalf = p.open(format=p.get_format_from_width(twoMeter.getsampwidth()),
+            channels=twoMeter.getnchannels(),
+            rate=twoMeter.getframerate(),
+            output=True)
+
+
+    dataHalf = halfMeter.readframes(chunk)
+    dataOne = oneMeter.readframes(chunk)
+    dataTwo = twoMeter.readframes(chunk)
 
     # while data:
 
     while True:
-      stream.write(data)
-      data = setengahMeter.readframes(chunk)
+      streamHalf.write(data)
+      dataHalf = halfMeter.readframes(chunk)
 
       dist = distance()
       print("Jarak Terukur = %.1f cm" % dist)
-      time.sleep(1)
+      # time.sleep(1)
 
       # control to voice
 
