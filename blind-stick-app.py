@@ -86,11 +86,15 @@ if __name__=='__main__':
       dist = distance()
       print("Jarak Terukur = %.1f cm" % dist)
       # time.sleep(1)
-      if dist >= 55:
-        print("hati-hati di depan setengah meter")
+      if dist > 0:
+        if dist < 5:
+          print("hati-hati didepan setengah meter")
+        elif dist < 10:
+          print("hati-hati didepan satu meter")
+        elif dist < 20:
+          print("hati-hati didepan dua meter")
       else:
         print("aman")
-        break
 
       # control to voice
 
