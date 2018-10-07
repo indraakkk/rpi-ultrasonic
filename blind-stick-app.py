@@ -89,7 +89,7 @@ if __name__=='__main__':
         if dist > 3 and dist <= 5:
           streamHalf.write(dataHalf)
           dataHalf = halfMeter.readframes(chunk)
-          time.sleep(3)
+          # time.sleep(3)
           # streamHalf.stop_stream()
           # streamHalf.close()
           # p.terminate()
@@ -97,7 +97,7 @@ if __name__=='__main__':
         elif dist > 6 and dist <= 10:
           streamOne.write(dataOne)
           dataOne = oneMeter.readframes(chunk)
-          time.sleep(3)
+          # time.sleep(3)
           # streamOne.stop_stream()
           # streamOne.close()
           # p.terminate()
@@ -106,7 +106,7 @@ if __name__=='__main__':
         elif dist > 11 and dist <= 20:
           streamTwo.write(dataTwo)
           dataTwo = twoMeter.readframes(chunk)
-          time.sleep(3)
+          # time.sleep(3)
           # streamTwo.stop_stream()
           # streamTwo.close()
           # p.terminate()          
@@ -114,14 +114,7 @@ if __name__=='__main__':
       else:
         print("aman")
       
-      streamHalf.stop_stream()
-      streamHalf.close()
 
-      streamOne.stop_stream()
-      streamOne.close()
-
-      streamTwo.stop_stream()
-      streamTwo.close()
 
       
 
@@ -129,5 +122,14 @@ if __name__=='__main__':
   except KeyboardInterrupt:
     print("Monitoring stopped by user")
     GPIO.cleanup()
+
+    streamHalf.stop_stream()
+    streamHalf.close()
+
+    streamOne.stop_stream()
+    streamOne.close()
+
+    streamTwo.stop_stream()
+    streamTwo.close()
 
     p.terminate()   
