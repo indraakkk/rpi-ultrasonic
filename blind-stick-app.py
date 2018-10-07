@@ -48,15 +48,15 @@ if __name__=='__main__':
       print("Jarak Terukur = %.1f cm" % dist)
 
       # voice control
-      if dist <= 5:
+      if dist <= 50:
         print("setengah meter didepan")
         os.system("aplay ./voice/setengahmeter.wav &")
         time.sleep(3)
-      if dist > 9  and dist <= 10:
+      if dist > 90  and dist <= 100:
         print("satu meter didepan")
         os.system("aplay ./voice/satumeter.wav &")
         time.sleep(3)
-      if dist > 19 and dist <= 20:
+      if dist > 190 and dist <= 200:
         print("dua meter didepan")
         os.system("aplay ./voice/duameter.wav &")
         time.sleep(3)
