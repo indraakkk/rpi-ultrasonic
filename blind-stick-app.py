@@ -82,45 +82,19 @@ if __name__=='__main__':
       print("Jarak Terukur = %.1f cm" % dist)
       # time.sleep(1)
       if dist > 3 and dist <= 5:
-        os.system("aplay ./voice/setengahmeter.wav &")
+        print("setengah meter didepan")
+        # os.system("aplay ./voice/setengahmeter.wav &")
 
       if dist > 6 and dist <= 10:
-        os.system("aplay ./voice/satumeter.wav &")
+        print("satu meter didepan")
+        # os.system("aplay ./voice/satumeter.wav &")
 
       if dist > 11 and dist <= 20:
-        os.system("aplay ./voice/duameter.wav &")
-      
-
-
-
-    #   if dist > 0:
-    #     if dist > 3 and dist <= 5:
-    #       streamHalf.write(dataHalf)
-    #       dataHalf = halfMeter.readframes(chunk)
-    #       # time.sleep(3)
-    #       # streamHalf.stop_stream()
-    #       # streamHalf.close()
-    #       # p.terminate()
-    #       print("hati-hati didepan setengah meter")
-    #     elif dist > 6 and dist <= 10:
-    #       streamOne.write(dataOne)
-    #       dataOne = oneMeter.readframes(chunk)
-    #       # time.sleep(3)
-    #       # streamOne.stop_stream()
-    #       # streamOne.close()
-    #       # p.terminate()
-
-    #       # print("hati-hati didepan satu meter")
-    #     elif dist > 11 and dist <= 20:
-    #       streamTwo.write(dataTwo)
-    #       dataTwo = twoMeter.readframes(chunk)
-    #       # time.sleep(3)
-    #       # streamTwo.stop_stream()
-    #       # streamTwo.close()
-    #       # p.terminate()          
-    #       # print("hati-hati didepan dua meter")
-    # else:
-    #   print("aman")
+        print("dua meter didepan")
+        # os.system("aplay ./voice/duameter.wav &")
+      sleep(0.1)
+      else:
+        print("oke")
 
   except KeyboardInterrupt:
     print("Monitoring stopped by user")
