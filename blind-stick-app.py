@@ -92,11 +92,11 @@ if __name__=='__main__':
           # print("hati-hati didepan setengah meter")
         elif dist < 10:
           streamOne.write(dataOne)
-          dataOne = halfMeter.readframes(chunk)
+          dataOne = oneMeter.readframes(chunk)
           # print("hati-hati didepan satu meter")
         elif dist < 20:
           streamTwo.write(dataTwo)
-          dataTwo = halfMeter.readframes(chunk)
+          dataTwo = twoMeter.readframes(chunk)
           # print("hati-hati didepan dua meter")
       else:
         print("aman")
